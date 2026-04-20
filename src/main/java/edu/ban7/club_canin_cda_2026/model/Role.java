@@ -1,5 +1,7 @@
 package edu.ban7.club_canin_cda_2026.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import edu.ban7.club_canin_cda_2026.view.AppPersonneView;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -17,11 +19,13 @@ import org.hibernate.validator.constraints.Length;
 public class Role {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @JsonView(AppPersonneView.class)
     protected Integer id;
 
     @Column(length = 50, nullable = false, unique = true)
     @NotBlank
     @Length(min=3, max=50)
+    @JsonView(AppPersonneView.class)
     protected String nom;
 
 }

@@ -35,8 +35,8 @@ public class Chien {
     @JsonView({ChienView.class, AppPersonneView.class})
     protected String nom;
 
-    @Column(nullable = false)
-    @NotNull
+    //@Column(nullable = false)
+    //@NotNull(message = "La date de naissance est obligatoire")
     @JsonView(ChienView.class)
     protected LocalDate dateNaissance;
 
@@ -50,35 +50,30 @@ public class Chien {
     @JsonView(ChienView.class)
     protected Double poids;
 
-    // Tant que ce champ est false, le chien ne peut pas s'inscrire à d'autres séances.
-    // Seul un coach peut le passer à true, après avoir évalué le chien.
-    @Column(nullable = false)
+//Tant que false : le chien peut uniquement s'inscrire aux séances d'inscription.
     @JsonView(ChienView.class)
     private boolean seanceObligatoireFaite = false;
 
-    // Relation avec Sexe : un chien a exactement un sexe
-    // @ManyToOne : plusieurs chiens peuvent avoir le même sexe
+    // Sexe du chien (Mâle / Femelle). Obligatoire.
     @ManyToOne
     @NotNull(message = "Le sexe est obligatoire")
     @JsonView(ChienView.class)
-    protected Sexe sexe;
+    private Sexe sexe;
 
-    // Relation avec Race : un chien appartient à une race
+    // Race du chien. Obligatoire.
     @ManyToOne
     @NotNull(message = "La race est obligatoire")
     @JsonView(ChienView.class)
-    protected Race race;
+    private Race race;
 
-    // 1 chien = 1 propriétaire
-    // @ManyToOne : un propriétaire peut avoir plusieurs chiens
+    // plusieurs chiens peuvent appartenir au même propriétaire,mais un chien n'a qu'un seul propriétaire.
     @ManyToOne
     @NotNull(message = "Le propriétaire est obligatoire")
     @JsonView(ChienView.class)
-    protected AppPersonne proprietaire;
+    private AppPersonne proprietaire;
 
+    //Un coach peut en ajouter à tout moment lors d'une séance.
 
-    // @JoinTable : crée une table intermédiaire "chien_competence" en base de données
-    // inverseJoinColumns → colonne qui pointe vers Compétence
     @ManyToMany
     @JoinTable(
             name = "chien_competence",
@@ -87,5 +82,5 @@ public class Chien {
     )
     @JsonView(ChienView.class)
     private List<Competence> competences = new ArrayList<>();
-
 }
+

@@ -3,6 +3,7 @@ package edu.ban7.club_canin_cda_2026.model;
 import com.fasterxml.jackson.annotation.JsonView;
 import edu.ban7.club_canin_cda_2026.view.AppPersonneView;
 import edu.ban7.club_canin_cda_2026.view.ChienView;
+import edu.ban7.club_canin_cda_2026.view.SeanceView;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -31,18 +32,18 @@ public class AppPersonne {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @JsonView(AppPersonneView.class)
+    @JsonView({AppPersonneView.class, SeanceView.class})
     protected Integer id;
 
     @Column(length = 50, nullable = false)
     @NotBlank(groups = {OnCreate.class}, message = "Le nom ne peut pas être vide")
     @Length(min=3, max=50)
-    @JsonView({AppPersonneView.class, ChienView.class})
+    @JsonView({AppPersonneView.class, ChienView.class, SeanceView.class})
     protected String nom;
 
     @Column(nullable = false)
     @NotBlank(groups = {OnCreate.class}, message = "Le prénom ne peut pas être vide")
-    @JsonView({AppPersonneView.class, ChienView.class})
+    @JsonView({AppPersonneView.class, ChienView.class, SeanceView.class})
     protected String prenom;
 
     @Column(nullable = false)
@@ -66,6 +67,7 @@ public class AppPersonne {
 
 
     @ManyToOne
+    @NotNull(message = "Le rôle est obligatoire")
     @JsonView(AppPersonneView.class)
     protected Role role;
 

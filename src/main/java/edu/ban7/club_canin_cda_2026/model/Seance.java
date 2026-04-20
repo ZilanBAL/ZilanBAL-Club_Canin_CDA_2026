@@ -46,7 +46,6 @@ public class Seance {
     @JsonView({SeanceView.class, AppPersonneView.class})
     private Integer duree;
 
-    //pas sûr ??
     @Min(value = 1, message = "Il doit y avoir au moins 1 participant possible")
     @JsonView(SeanceView.class)
     protected Integer nbParticipantMax;
