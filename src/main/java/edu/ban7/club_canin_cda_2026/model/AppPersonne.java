@@ -32,7 +32,7 @@ public class AppPersonne {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @JsonView({AppPersonneView.class, SeanceView.class})
+    @JsonView({AppPersonneView.class, SeanceView.class, ChienView.class})
     protected Integer id;
 
     @Column(length = 50, nullable = false)
